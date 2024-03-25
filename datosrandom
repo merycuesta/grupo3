@@ -1,0 +1,31 @@
+import json
+import random
+from datetime import datetime, timezone, timedelta
+
+def generate_random_data(num_samples):
+    data = []
+    for _ in range(num_samples):
+        radar_id = random.randint(1, 100)  # ID del radar
+        speed = round(random.uniform(0, 200), 2)  # Velocidad en km/h
+        direction = random.choice([0, 1])  # Dirección (0 = creciente, 1 = decreciente)
+        vehicle_type = random.choice([0, 1, 2, 3, 4, 5])  # Tipo de vehículo
+        timestamp = datetime.utcnow().replace(tzinfo=timezone.utc) - timedelta(days=random.randint(0, 365))  # Fecha y hora en formato UTC
+        
+        data.append({
+            "id": radar_id,
+            "speed": speed,
+            "direction": direction,
+            "type": vehicle_type,
+            "timestamp": timestamp.strftime('%Y-%m-%dT%H:%M:%SZ')
+        })
+    return data
+
+def save_data_to_json(data, filename):
+    with open(filename, 'w') as file:
+        json.dump(data, file, indent=4)
+
+if __name__ == "_main_":
+    num_samples = 10  # Número de muestras a generar
+    data = generate_random_data(num_samples)
+    save_data_to_json(data, 'sample_data.json')
+    print(f"Se han generado {num_samples} muestras de datos y se han almacenado en 'sample_data.json'.")

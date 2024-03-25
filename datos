@@ -1,0 +1,40 @@
+from fiware_service import FiwareService
+import json
+
+def load_data_from_json(filename):
+    with open(filename, 'r') as f:
+        data = json.load(f)
+    return data
+
+# Cargar datos del archivo JSON
+data = load_data_from_json("datos_radar.json")
+
+# Configurar la conexión con la plataforma FIWARE
+fiware_service = FiwareService('<FIWARE_HOST>', '<FIWARE_PORT>', '<FIWARE_SERVICE>', '<FIWARE_PATH>', '<FIWARE_API_KEY>')
+
+# Enviar los datos a la plataforma FIWARE
+for entry in data:
+    # Aquí asumimos que 'speed', 'direction', 'type' y 'timestamp' son atributos de la entidad 'Vehicle'
+    entity = {
+        "id": entry["id"],
+        "type": "Vehicle",
+        "speed": {
+            "value": entry["speed"],
+            "type": "Number"
+        },
+        "direction": {
+            "value": entry["direction"],
+            "type": "Number"
+        },
+"type": {
+            "value": entry["type"],
+            "type": "Number"
+        },
+        "timestamp": {
+            "value": entry["timestamp"],
+            "type": "DateTime"
+        }
+    }
+    fiware_service.create_entity(entity)
+
+print("Datos enviados exitosamente a FIWARE.")
