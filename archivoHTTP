@@ -1,0 +1,19 @@
+POST http://tu_url_aqui
+Content-Type: application/json
+
+{
+    "id": "22",
+    "type": "0-1ligero,2-3mediano,4-5pesado",
+    "name": {
+        "value": "coche/moto"
+    },
+    "direction": {
+        "value": 0
+    }, 
+    "speed": {
+        "value": 15
+    }, 
+    "timestamp": {
+        "value": "2023-11-09T13:15:52Z"
+    }, 
+}
